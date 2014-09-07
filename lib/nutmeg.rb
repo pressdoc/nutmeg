@@ -1,5 +1,6 @@
 require "nutmeg/version"
-
-module Nutmeg
-  # Your code goes here...
-end
+require "nutmeg/tree_from_yaml"
+require "nutmeg/tag_tree"
+require "nutmeg/tag_tree_helper"
+require "yaml"
+require "tree"

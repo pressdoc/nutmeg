@@ -1,0 +1,47 @@
+tree:
+  - 1:
+    - 3:
+      - 5:
+        - 8:
+        - 9:
+        - 10:
+    - 4:
+      - 5:
+        - 8:
+        - 9:
+        - 10:
+    - 6:
+      - 13:
+      - 14:
+    - 7:
+      - 11:
+      - 12:
+  - 2:
+    - 3:
+      - 5:
+        - 8:
+        - 9:
+        - 10:
+    - 4:
+      - 5:
+        - 8:
+        - 9:
+        - 10:
+
+
+
+tags:
+  1: north
+  2: south
+  3: men
+  4: women
+  5: collections
+  6: events
+  7: collaborations
+  8: winter 2015
+  9: spring 2015
+  10: summer 2015
+  11: afro jack
+  12: pr.co
+  13: lowlands 2014
+  14: sinterklaas 2014
