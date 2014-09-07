@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/nutmeg.svg)](http://badge.fury.io/rb/nutmeg) [![Build Status](https://travis-ci.org/pressdoc/nutmeg.svg?branch=master)](https://travis-ci.org/pressdoc/nutmeg)
 # Nutmeg
 
 Help you build and show a menu tree in rails
