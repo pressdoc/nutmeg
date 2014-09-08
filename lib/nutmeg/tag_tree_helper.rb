@@ -10,15 +10,18 @@ module Nutmeg
       [print_node(@tree.original, tags_given)].join("")
     end
 
-    def node_html(node, active, leaf)
-      "<li class='level_#{node.level}#{leaf ? ' leaf' : ''}#{active ? ' active' : ''}'>"
+    def node_html(node, active, leaf, content)
+      "<li class='level_#{node.level}#{leaf ? ' leaf' : ''}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{node_path(node)}\'" : ''}>#{content}</a>"
+    end
+
+    def node_path(node)
+      ([""] + node.parentage.map{|p| p.content[:slug]}.reverse.reject{|n| n == "root"} + [node.content[:slug]]).join("/")
     end
 
     def print_node(node, tags_given)
       output = []
       if render_node?(node,tags_given)
-        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name)), node.is_leaf? )
-        output << node.content[:slug]
+        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name)), node.is_leaf?, node.content[:slug])
       end
 
       if !traverse_node?(node, tags_given)
