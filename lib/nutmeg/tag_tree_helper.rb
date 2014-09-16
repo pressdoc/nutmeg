@@ -6,8 +6,8 @@ module Nutmeg
       @tree = tree
     end
 
-    def print_html(tags_given)
-      [print_node(@tree.original, tags_given)].join("")
+    def print_html(tags_given, greedy = false)
+      [print_node(@tree.original, tags_given, greedy)].join("")
     end
 
     def node_html(node, active, leaf, content)
@@ -18,10 +18,10 @@ module Nutmeg
       ([""] + node.parentage.map{|p| p.content[:slug]}.reverse.reject{|n| n == "root"} + [node.content[:slug]]).join("/")
     end
 
-    def print_node(node, tags_given)
+    def print_node(node, tags_given, greedy = false)
       output = []
       if render_node?(node,tags_given)
-        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name)), node.is_leaf?, node.content[:slug])
+        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name) || (greedy == true && tags_given.include?(node.content[:slug]))), node.is_leaf?, node.content[:slug])
       end
 
       if !traverse_node?(node, tags_given)
@@ -31,7 +31,7 @@ module Nutmeg
       if node.has_children?
         output << "<ul>"
           node.children.each do |child|
-            output << print_node(child, tags_given)
+            output << print_node(child, tags_given, greedy)
           end
         output << "</ul>"
       end
