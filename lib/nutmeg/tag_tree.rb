@@ -7,9 +7,9 @@ module Nutmeg
       @original = tree
     end
 
-    def subtree(id)
+    def subtree(slug)
       @original.each do |node|
-        return Nutmeg::TagTree.new(node.detached_subtree_copy) if node.content[:tag_id] == id
+        return Nutmeg::TagTree.new(node.detached_subtree_copy) if node.content[:slug] == slug
       end
     end
 

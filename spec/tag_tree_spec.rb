@@ -15,9 +15,9 @@ describe Nutmeg::TagTree do
   end
 
   describe "#subtree" do
-    it "returns a subtree starting at tag with tag_id 1" do
+    it "returns a subtree starting at tag with slug 'base'" do
       expect(@tag_tree.original.size).to eq(3)
-      expect(@tag_tree.subtree(1).original.size).to eq(2)
+      expect(@tag_tree.subtree("base").original.size).to eq(2)
     end
   end
 
