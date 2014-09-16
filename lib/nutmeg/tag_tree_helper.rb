@@ -49,7 +49,7 @@ module Nutmeg
     def traverse_node?(node, tags_given)
       return true if node.is_root?
       return true if node.level == 1
-      (node.parentage.select{|n| n.level == 1}.map{|n| n.content[:tag_id]} & tags_given).count >= 1
+      (node.parentage.select{|n| n.level == 1}.map{|n| n.content[:slug]} & tags_given).count >= 1
     end
   end
 end

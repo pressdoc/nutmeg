@@ -27,7 +27,7 @@ describe Nutmeg::TagTree do
 
   describe "#get_paths_formatted" do
     it "returns base/child when using [1,2] as selector" do
-      expect(@tag_tree.get_paths_formatted([1,2]).first).to eq("base/child")
+      expect(@tag_tree.get_paths_formatted(["base", "child"]).first).to eq("base/child")
     end
   end
 end
