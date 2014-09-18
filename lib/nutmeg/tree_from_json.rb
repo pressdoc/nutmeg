@@ -3,8 +3,7 @@ module Nutmeg
     attr_accessor :base_tree, :tags, :tree_hash, :tree, :tag_tree
 
     def initialize(data)
-      @data = data
-      # @tags = @data["tags"]
+      @data = JSON.load(data)
       @base_tree = @data
       @tag_tree = Tree::TreeNode.new("ROOT", {:tag => "root",:otag => "root", :level => nil, :slug => "root"})
       base_tree.each do |node|

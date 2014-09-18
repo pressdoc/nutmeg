@@ -4,7 +4,7 @@ describe Nutmeg::TagTreeHelper do
 
   before(:each) do
     @tree_from_yaml = Nutmeg::TreeFromYaml.new({file: [Dir.pwd, "/spec/files/tree.yml"].join})
-    data = JSON.load(File.open([Dir.pwd, "/spec/files/tree.json"].join))
+    data = File.open([Dir.pwd, "/spec/files/tree.json"].join)
     @tree_from_json = Nutmeg::TreeFromJson.new(data)
   end
 

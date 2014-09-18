@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Nutmeg::TreeFromJson do
 
   before(:each) do
-    data = JSON.load(File.open([Dir.pwd, "/spec/files/tree.json"].join))
+    data = File.open([Dir.pwd, "/spec/files/tree.json"].join).read
     @tree_from_json = Nutmeg::TreeFromJson.new(data)
   end
 
