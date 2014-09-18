@@ -1,9 +1,22 @@
 module Nutmeg
   class TagTreeHelper
     attr_accessor :tree
-    def initialize(tree)
+    def initialize(tree, options = {})
       raise "No valid data type" unless tree.class == TagTree
+      @options = options
       @tree = tree
+    end
+
+    def prepend_path
+      @options[:prepend_path] || ""
+    end
+
+    def append_path
+      @options[:append_path] || ""
+    end
+
+    def title(node)
+      node.content[:name] || node.content[:slug]
     end
 
     def print_html(tags_given, greedy = false)
@@ -11,7 +24,7 @@ module Nutmeg
     end
 
     def node_html(node, active, leaf, content)
-      "<li class='level_#{node.level}#{leaf ? ' leaf' : ''}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{node_path(node)}\'" : ''}>#{content}</a>"
+      "<li class='level_#{node.level}#{leaf ? ' leaf' : ''}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{prepend_path}#{node_path(node)}#{append_path}\'" : ''}>#{content}</a>"
     end
 
     def node_path(node)
@@ -21,7 +34,7 @@ module Nutmeg
     def print_node(node, tags_given, greedy = false)
       output = []
       if render_node?(node,tags_given)
-        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name) || (greedy == true && tags_given.include?(node.content[:slug]))), node.is_leaf?, node.content[:slug])
+        output << node_html(node, (!@tree.get_paths(tags_given).first.nil? && @tree.get_paths(tags_given).first.map(&:name).include?(node.name) || (greedy == true && tags_given.include?(node.content[:slug]))), node.is_leaf?, title(node))
       end
 
       if !traverse_node?(node, tags_given)

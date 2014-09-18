@@ -4,6 +4,8 @@ describe Nutmeg::TagTreeHelper do
 
   before(:each) do
     @tree_from_yaml = Nutmeg::TreeFromYaml.new({file: [Dir.pwd, "/spec/files/tree.yml"].join})
+    data = JSON.load(File.open([Dir.pwd, "/spec/files/tree.json"].join))
+    @tree_from_json = Nutmeg::TreeFromJson.new(data)
   end
 
   describe "#print_html" do
@@ -21,7 +23,11 @@ describe Nutmeg::TagTreeHelper do
       subtree = @tree_from_yaml.tree.subtree("north")
       expect(Nutmeg::TagTreeHelper.new(subtree).print_html(["men", "collections"],true)).to eq("<ul><li class='level_1 active'> <a >men</a><ul><li class='level_2 active'> <a >collections</a><ul><li class='level_3 leaf'> <a href='/north/men/collections/winter_2015'>winter_2015</a></li><li class='level_3 leaf'> <a href='/north/men/collections/spring_2015'>spring_2015</a></li><li class='level_3 leaf'> <a href='/north/men/collections/summer_2015'>summer_2015</a></li></ul></li></ul></li><li class='level_1'> <a >women</a><ul><li class='level_2 active'> <a >collections</a><ul><li class='level_3 leaf'> <a href='/north/women/collections/winter_2015'>winter_2015</a></li><li class='level_3 leaf'> <a href='/north/women/collections/spring_2015'>spring_2015</a></li><li class='level_3 leaf'> <a href='/north/women/collections/summer_2015'>summer_2015</a></li></ul></li></ul></li><li class='level_1'> <a >events</a><ul><li class='level_2 leaf'> <a href='/north/events/lowlands_2014'>lowlands_2014</a></li><li class='level_2 leaf'> <a href='/north/events/sinterklaas_2014'>sinterklaas_2014</a></li></ul></li><li class='level_1'> <a >collaborations</a><ul><li class='level_2 leaf'> <a href='/north/collaborations/afro_jack'>afro_jack</a></li><li class='level_2 leaf'> <a href='/north/collaborations/pr_co'>pr_co</a></li></ul></li></ul>")
     end
-
-
+    context "from json" do
+      it "outputs html for subtree" do
+        subtree = @tree_from_json.tree
+        expect(Nutmeg::TagTreeHelper.new(subtree, {:prepend_path => "/nl/t"}).print_html(["men", "collections"],false)).to eq("<ul><li class='level_1'> <a >North</a><ul><li class='level_2'> <a >Men</a><ul><li class='level_3 leaf'> <a href='/nl/t/north/men/footwear'>Footwear</a></li><li class='level_3 leaf'> <a href='/nl/t/north/men/eyewear'>Eyewear</a></li></ul></li><li class='level_2'> <a >Women</a><ul><li class='level_3 leaf'> <a href='/nl/t/north/women/footwear'>Footwear</a></li><li class='level_3'> <a >Eyewear</a><ul><li class='level_4 leaf'> <a href='/nl/t/north/women/eyewear/gfdgdfs'>gfdgdfs</a></li></ul></li></ul></li><li class='level_2 leaf'> <a href='/nl/t/north/collaboration'>Collaboration</a></li></ul></li><li class='level_1'> <a >South</a><ul><li class='level_2'> <a >Men</a><ul><li class='level_3 leaf'> <a href='/nl/t/south/men/collection'>Collection</a></li><li class='level_3 leaf'> <a href='/nl/t/south/men/footwear'>Footwear</a></li><li class='level_3 leaf'> <a href='/nl/t/south/men/eyewear'>Eyewear</a></li></ul></li><li class='level_2'> <a >Women</a><ul><li class='level_3 leaf'> <a href='/nl/t/south/women/collection'>Collection</a></li><li class='level_3 leaf'> <a href='/nl/t/south/women/footwear'>Footwear</a></li><li class='level_3 leaf'> <a href='/nl/t/south/women/eyewear'>Eyewear</a></li></ul></li><li class='level_2 leaf'> <a href='/nl/t/south/collaboration'>Collaboration</a></li></ul></li></ul>")
+      end
+    end
   end
 end

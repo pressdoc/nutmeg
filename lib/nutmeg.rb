@@ -1,5 +1,6 @@
 require "nutmeg/version"
 require "nutmeg/tree_from_yaml"
+require "nutmeg/tree_from_json"
 require "nutmeg/tag_tree"
 require "nutmeg/tag_tree_helper"
 require "yaml"
