@@ -27,6 +27,10 @@ module Nutmeg
       end
     end
 
+    def get_paths_eager(tags_given)
+      @original.children.select{|l| tags_given.include?(l.content[:slug])}.collect{|leaf| ([leaf] + leaf.parentage).reverse }
+    end
+
     def get_paths_formatted(tags_given, seperator = "/")
       get_paths(tags_given).collect do |tags|
         tags.reject{|tag| tag.content[:slug] == "root"}.map{|node| node.content[:slug]}.join(seperator)

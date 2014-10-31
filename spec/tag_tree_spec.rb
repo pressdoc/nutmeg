@@ -21,8 +21,10 @@ describe Nutmeg::TagTree do
     end
   end
 
-  describe "#get_paths" do
-    pending "Fix this"
+  describe "#get_paths_eager" do
+    it 'verifies output is similar' do
+      expect(@tag_tree.get_paths_eager(["base"]).first.first.class).to eq(@tag_tree.get_paths(["base", "child"]).first.first.class)
+    end
   end
 
   describe "#get_paths_formatted" do
