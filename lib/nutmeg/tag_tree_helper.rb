@@ -18,9 +18,8 @@ module Nutmeg
     def title(node)
       node.content[:name] || node.content[:slug]
     end
-
-    def print_html(tags_given, greedy = false, extra_html = nil)
-      [print_node(@tree.original, tags_given, greedy, extra_html)].join("")
+    def print_html(tags_given, greedy = false, extra_html = nil, do_not_wrap = false)
+      [print_node(@tree.original, tags_given, greedy, extra_html, do_not_wrap)].join("")
     end
 
     def node_html(node, active, leaf, content, extra_html = nil)
@@ -31,7 +30,7 @@ module Nutmeg
       ([""] + node.parentage.map{|p| p.content[:slug]}.reverse.reject{|n| n == "root"} + [node.content[:slug]]).join("/")
     end
 
-    def print_node(node, tags_given, greedy = false, extra_html = nil)
+    def print_node(node, tags_given, greedy = false, extra_html = nil, do_not_wrap = false)
       output = []
 
       if render_node?(node,tags_given)
@@ -43,11 +42,11 @@ module Nutmeg
         return output
       end
       if node.has_children?
-        output << "<ul>"
+        output << (do_not_wrap && node.is_root? ? "" : "<ul>")
           node.children.each do |child|
-            output << print_node(child, tags_given, greedy,extra_html)
+            output << print_node(child, tags_given, greedy,extra_html, do_not_wrap)
           end
-        output << "</ul>"
+        output << (do_not_wrap && node.is_root? ? "" : "</ul>")
       end
       if render_node?(node,tags_given)
         output << "</li>"
