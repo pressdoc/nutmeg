@@ -42,6 +42,18 @@ describe Nutmeg::TagTreeHelper do
         end
       end
 
+
+      context "Big tree with complex structure" do
+        it "returns the correct html" do
+          data = File.open([Dir.pwd, "/spec/files/big_tree.json"].join)
+          @tree_from_json = Nutmeg::TreeFromJson.new(data)
+          subtree = @tree_from_json.tree.subtree("north")
+          tree_html = Nutmeg::TagTreeHelper.new(subtree).print_html(["north", "about", "milestones", "2014", "the-netherlands"], true)
+          expect(tree_html).to include("<a >About</a><ul><li class='level_2'> <a >Factsheets</a>")
+          expect(tree_html).not_to include("<a >About</a><ul><li class='level_2 active'> <a >Factsheets</a>")
+          expect(tree_html).to include("<li class='level_2 active'> <a >Milestones</a><ul><li class='level_3 leaf active'> <a href='/north/about/milestones/2014'>2014</a></li></ul></li>")
+        end
+      end
     end
 
   end

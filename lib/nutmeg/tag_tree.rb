@@ -13,18 +13,21 @@ module Nutmeg
       end
     end
 
-    def get_paths(tags_given)
+    def get_paths(tags_given, strict = false)
       start_nodes = @original.children.select{|l| tags_given.include?(l.content[:slug])}
       end_nodes = @original.each_leaf.select{|l| tags_given.include?(l.content[:slug])}
 
-      end_nodes.select do |end_node|
+      result = end_nodes.select do |end_node|
         (end_node.parentage & start_nodes).count >= 1
       end.collect do |leaf|
         ([leaf] + leaf.parentage).reverse
       end.select do |path|
-        # we always include the 'root' tag
-        (path.map{|tag| tag.content[:slug] } - tags_given).count == 1
+        (path.map{|tag| tag.content[:slug] } & tags_given).count >= 1
       end
+
+      result.sort_by! do |path|
+        ((path.map{|tag| tag.content[:slug] } & tags_given).count)
+      end.reverse!
     end
 
     def get_paths_eager(tags_given)

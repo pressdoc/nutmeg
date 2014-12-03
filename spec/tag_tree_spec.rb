@@ -32,4 +32,15 @@ describe Nutmeg::TagTree do
       expect(@tag_tree.get_paths_formatted(["base", "child"]).first).to eq("base/child")
     end
   end
+
+  context "Order paths by relevance" do
+    describe "#get_paths_formatted" do
+      it "returns paths in the right order" do
+        data = File.open([Dir.pwd, "/spec/files/big_tree.json"].join)
+        @tree_from_json = Nutmeg::TreeFromJson.new(data)
+        subtree = @tree_from_json.tree.subtree("north")
+        expect(subtree.get_paths_formatted(["north", "about", "milestones", "2014", "the-netherlands"])).to eq(["north/about/milestones/2014", "north/about/factsheets/2014"])
+      end
+    end
+  end
 end
