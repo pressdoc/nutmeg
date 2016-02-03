@@ -20,7 +20,8 @@ module Nutmeg
           :tag_id => node["data"]["id"],
           :tag => node["id"],
           :slug => node["data"]["slug"],
-          :name => node["data"]["name"]
+          :name => node["data"]["name"],
+          :description => node["data"]["description"]
         }
       end
 
