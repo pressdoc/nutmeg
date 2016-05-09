@@ -43,4 +43,16 @@ describe Nutmeg::TagTree do
       end
     end
   end
+
+  describe "descendant nodes" do
+    it "Retrieve a path to a descendant node, given a leaf node" do
+      path = @tag_tree.get_path_to_node("child")
+      expect(path.length).to eql(3)
+    end
+
+    it "Retrieve a path to a descendant node, given a middle-tree node" do
+      path = @tag_tree.get_path_to_node("base")
+      expect(path.length).to eql(2)
+    end
+  end
 end

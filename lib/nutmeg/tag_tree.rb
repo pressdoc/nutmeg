@@ -34,6 +34,17 @@ module Nutmeg
       @original.children.select{|l| tags_given.include?(l.content[:slug])}.collect{|leaf| ([leaf] + leaf.parentage).reverse }
     end
 
+    def get_path_to_node(tag_slug, path_so_far = [])
+      node = @original.select{|node|node.content[:slug] == tag_slug}.first
+      return get_recursive_path_to_node(node, [node])
+    end
+
+    def get_recursive_path_to_node(node, path_so_far)
+      return path_so_far if node.parent.nil?
+      path_so_far << node.parent
+      get_recursive_path_to_node(node.parent, path_so_far)
+    end
+
     def get_paths_formatted(tags_given, seperator = "/")
       get_paths(tags_given).collect do |tags|
         tags.reject{|tag| tag.content[:slug] == "root"}.map{|node| node.content[:slug]}.join(seperator)
