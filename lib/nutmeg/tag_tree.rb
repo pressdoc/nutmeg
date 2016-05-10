@@ -36,11 +36,11 @@ module Nutmeg
 
     def get_path_to_node(tag_slug, path_so_far = [])
       node = @original.select{|node|node.content[:slug] == tag_slug}.first
-      return get_recursive_path_to_node(node, [node])
+      return get_recursive_path_to_node(node, [node]).reverse
     end
 
     def get_recursive_path_to_node(node, path_so_far)
-      return path_so_far if node.parent.nil?
+      return path_so_far if node.parent.nil? || node.parent.content[:slug] == 'root'
       path_so_far << node.parent
       get_recursive_path_to_node(node.parent, path_so_far)
     end
