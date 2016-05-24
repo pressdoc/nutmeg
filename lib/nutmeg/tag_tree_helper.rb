@@ -26,7 +26,7 @@ module Nutmeg
     def print_relevant_html(tags_given, greedy = false, extra_html = nil, do_not_wrap = false)
       html_nodes = []
       intersectional_tags(tags_given).each do |node|
-        html_nodes << node_html(node, false, true, title(node)) + "</li>"
+        html_nodes << node_html(node, false, true, title(node), extra_html) + "</li>"
       end
       return html_nodes.join
     end
