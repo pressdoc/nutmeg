@@ -18,12 +18,30 @@ module Nutmeg
     def title(node)
       node.content[:name] || node.content[:slug]
     end
+
     def print_html(tags_given, greedy = false, extra_html = nil, do_not_wrap = false)
       [print_node(@tree.original, tags_given, greedy, extra_html, do_not_wrap)].join("")
     end
 
-    def node_html(node, active, leaf, content, extra_html = nil)
+    def print_relevant_html(tags_given, greedy = false, extra_html = nil, do_not_wrap = false)
+      html_nodes = []
+      intersectional_tags(tags_given).each do |node|
+        html_nodes << node_html(node, false, true, title(node)) + "</li>"
+      end
+      return html_nodes.join
+    end
 
+    def intersectional_tags(tags_given)
+      tree_nodes = []
+      @tree.original.each do |node|
+        if tags_given.include? node.content[:slug]
+          tree_nodes << node
+        end
+      end
+      return tree_nodes.uniq{|p| p.content[:slug]}
+    end
+
+    def node_html(node, active, leaf, content, extra_html = nil)
       "<li class='level_#{node.level}#{leaf ? ' leaf' : ''}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{prepend_path}#{node_path(node)}#{append_path}\'" : ''}>#{content}</a>#{extra_html && active && leaf ? extra_html : ''}"
     end
 

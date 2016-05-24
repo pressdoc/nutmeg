@@ -55,6 +55,10 @@ describe Nutmeg::TagTreeHelper do
         end
       end
     end
-
   end
+
+
+  it "outputs relevant tags as html" do
+      expect(Nutmeg::TagTreeHelper.new(@tree_from_yaml.tree).print_relevant_html(['men', 'summer_2015'])).to eq("<li class='level_2 leaf'> <a href='/north/men'>men</a></li><li class='level_4 leaf'> <a href='/north/men/collections/summer_2015'>summer_2015</a></li>")
+    end
 end
