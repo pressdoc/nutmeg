@@ -42,7 +42,7 @@ module Nutmeg
     end
 
     def node_html(node, active, leaf, content, extra_html = nil)
-      "<li class='level_#{node.level}#{leaf ? ' leaf' : 'subtree'}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{prepend_path}#{node_path(node)}#{append_path}\'" : ''}>#{content}</a>#{extra_html && active && leaf ? extra_html : ''}"
+      "<li class='level_#{node.level}#{leaf ? ' leaf' : ' subtree'}#{active ? ' active' : ''}'> <a #{(leaf) ? "href=\'#{prepend_path}#{node_path(node)}#{append_path}\'" : ''}>#{content}</a>#{extra_html && active && leaf ? extra_html : ''}"
     end
 
     def node_path(node)
