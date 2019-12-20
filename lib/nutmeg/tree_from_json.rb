@@ -21,7 +21,9 @@ module Nutmeg
           :tag => node["id"],
           :slug => node["data"]["slug"],
           :name => node["data"]["name"],
-          :description => node["data"]["description"]
+          :description => node["data"]["description"],
+          :tag_image => node["data"]["tag_image"],
+          :tag_image_file_name => node["data"]["tag_image_file_name"]
         }
       end
 
