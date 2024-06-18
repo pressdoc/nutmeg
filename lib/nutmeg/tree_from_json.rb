@@ -23,7 +23,10 @@ module Nutmeg
           :name => node["data"]["name"],
           :description => node["data"]["description"],
           :tag_image => node["data"]["tag_image"],
-          :tag_image_file_name => node["data"]["tag_image_file_name"]
+          :tag_image_file_name => node["data"]["tag_image_file_name"],
+          :layout => node["data"]["layout"],
+          :hero_image => node["data"]["hero_image"],
+          :hero_image_file_name => node["data"]["hero_image_file_name"]
         }
       end
 
